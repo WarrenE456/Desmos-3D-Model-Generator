@@ -5,7 +5,7 @@
 
 #include "prelude.h"
 #include "file_header.h"
-#include "tri.h"
+#include "model.h"
 
 int main() {
     FILE* f = fopen("cube.stl", "rb");
@@ -24,7 +24,7 @@ int main() {
     Model model;
     Model_init(&model, head.n, f);
 
-    Vec3 center = Model_center(model);
+    Vec3 center = Model_center(&model);
     Vec3_negate(&center);
 
     Model_translate(&model, center.x, center.y, center.z);
@@ -32,9 +32,7 @@ int main() {
 
     printf("%s", PRELUDE);
 
-    for (uint32_t i = 0; i < head.n; ++i) {
-        Tri_display(&model.data[i]);
-    }
+    Model_display(&model);
 
     Model_deinit(&model);
     fclose(f);

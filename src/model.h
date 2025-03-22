@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #pragma pack(push, 1)
@@ -22,13 +23,14 @@ typedef struct {
     Tri* data;
 } Model;
 
-void Vec3_display(Vec3* vec);
+void Vec3_display(Vec3 const* vec);
 void Vec3_negate(Vec3* vec);
 
-void Tri_display(Tri* tri);
+void Tri_display(Tri const* tri);
 
 void Model_init(Model* model, uint32_t n, FILE* f);
 void Model_deinit(Model* model);
-Vec3 Model_center(Model model);
-void Model_translate(Model* model, float dx, float dy, float dz);
+Vec3 Model_center(Model const* model);
+void Model_translate(Model const* model, float dx, float dy, float dz);
 void Model_normalize(Model* model);
+void Model_display(Model const* model);

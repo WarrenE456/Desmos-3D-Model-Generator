@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#include "tri.h"
+#include "model.h"
 
-void Vec3_display(Vec3* vec) {
+void Vec3_display(Vec3 const* vec) {
     printf("t((%.4f,%.4f,%.4f))", vec->x, vec->y, vec->z);
 }
 
@@ -12,8 +12,8 @@ void Vec3_negate(Vec3* vec) {
     vec->z *= -1.0f;
 }
 
-void Tri_display(Tri* tri) {
-    printf("polygon(");
+void Tri_display(const Tri* tri) {
+    printf("\\operatorname{polygon}(");
     Vec3_display(&tri->p1);
     printf(",");
     Vec3_display(&tri->p2);
@@ -45,27 +45,27 @@ void Model_deinit(Model* model) {
     free(model->data);
 }
 
-Vec3 Model_center(Model model) {
+Vec3 Model_center(Model const* model) {
     float sum_x = 0, sum_y = 0,sum_z = 0;
-    for (uint32_t i = 0; i < model.n; ++i) {
-        sum_x += model.data[i].p1.x;
-        sum_y += model.data[i].p1.y;
-        sum_z += model.data[i].p1.z;
+    for (uint32_t i = 0; i < model->n; ++i) {
+        sum_x += model->data[i].p1.x;
+        sum_y += model->data[i].p1.y;
+        sum_z += model->data[i].p1.z;
 
-        sum_x += model.data[i].p2.x;
-        sum_y += model.data[i].p2.y;
-        sum_z += model.data[i].p2.z;
+        sum_x += model->data[i].p2.x;
+        sum_y += model->data[i].p2.y;
+        sum_z += model->data[i].p2.z;
 
-        sum_x += model.data[i].p3.x;
-        sum_y += model.data[i].p3.y;
-        sum_z += model.data[i].p3.z;
+        sum_x += model->data[i].p3.x;
+        sum_y += model->data[i].p3.y;
+        sum_z += model->data[i].p3.z;
     }
-    uint32_t n = model.n * 3;
+    uint32_t n = model->n * 3;
     Vec3 center = { .x = sum_x / n, .y = sum_y / n, .z = sum_z / n};
     return center;
 }
 
-void Model_translate(Model* model, float dx, float dy, float dz) {
+void Model_translate(Model const* model, float dx, float dy, float dz) {
     for (uint32_t i = 0; i < model->n; ++i) {
         model->data[i].p1.x += dx;
         model->data[i].p1.y += dy;
@@ -143,5 +143,11 @@ void Model_normalize(Model* model) {
         model->data[i].p3.x *= scale_factor;
         model->data[i].p3.y *= scale_factor;
         model->data[i].p3.z *= scale_factor;
+    }
+}
+
+void Model_display(Model const* model) {
+    for (uint32_t i = 0; i < model->n; ++i) {
+        Tri_display(&model->data[i]);
     }
 }
