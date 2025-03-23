@@ -9,6 +9,7 @@
 int main(int argc, char** argv) {
     if (argc != 2) {
         fprintf(stderr, "Usage: dtmg some/model.stl\n");
+        return 1;
     }
 
     char* filepath = argv[1];
