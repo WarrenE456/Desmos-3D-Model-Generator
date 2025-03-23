@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -7,10 +6,15 @@
 #include "file_header.h"
 #include "model.h"
 
-int main() {
-    FILE* f = fopen("cube.stl", "rb");
+int main(int argc, char** argv) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: dtmg some/model.stl\n");
+    }
+
+    char* filepath = argv[1];
+    FILE* f = fopen(filepath, "rb");
     if (!f) {
-        fprintf(stderr, "Failed to open file.\n");
+        fprintf(stderr, "Failed to open file '%s'.\n", filepath);
         return 1;
     }
 
@@ -39,4 +43,3 @@ int main() {
 
     return 0;
 }
-
