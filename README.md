@@ -6,3 +6,4 @@ Make sure you have make and gcc installed (`sudo apt-get install build-essential
 Then, in the repository, simply run `make`. This will create a directory called 'build', containing an executable named 'dtmg'.  
 Run it with the path to your _binary_ STL file as the first and only argument.
 ```./dtmg path/to/model.stl```
+The STL file should be very low poly so that Desmos doesn't have a conniption.
